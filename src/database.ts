@@ -19,7 +19,6 @@ const dataSource = new DataSource({
     password: DB_PASSWORD,
     database: DB_NAME,
     entities: [__dirname + "/models/*.ts"],
-    // entities: ['models/*.ts'],
     useUnifiedTopology: true,
     authSource: 'admin',
     synchronize: false,
@@ -29,12 +28,6 @@ const dataSource = new DataSource({
 const getDataSource = () => dataSource
 
 const connect = () => dataSource.initialize()
-    .then(() => {
-        console.log('connected to database')
-    })
-    .catch((err) => {
-        console.log('Error during Data Source initialization', err)
-    })
 
 export default {
     getDataSource,

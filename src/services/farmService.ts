@@ -1,27 +1,40 @@
 import ResourceNotFoundException from '../exceptions/ResourceNotFoundException'
 import { Farm } from '../models/farm'
 import FarmRepository from '../repositories/farmRepository'
-import { IFarm } from '../types/custom/types'
+import { IFarm } from '../models/types/IFarm'
+import { IFarmService } from './types/IFarmService'
+import ValidationErrorException from '../exceptions/ValidationErrorException'
 
-const createFarm = async (farm: IFarm) => {
-    const newFarm = new Farm()
-    newFarm.name = farm.name
-    newFarm.owner = farm.owner
+const FarmerService: IFarmService = {
+    async checkCreateData(farmerId: string) {
+        const farmInDatabase = await FarmRepository.findByFarmerId(farmerId)
 
-    return await FarmRepository.save(newFarm)
-}
+        if(farmInDatabase) {
+            throw new ValidationErrorException('Farm for this farmer already exists')
+        }
 
-const findByFarmerOrFail = async (farmerId: string) => {
-    const farm = await FarmRepository.findByFarmerId(farmerId)
+        return Promise.resolve()
+    },
 
-    if (!farm) {
-        throw new ResourceNotFoundException('Farm was not found')
+    async createFarm(farm: IFarm) {
+        await this.checkCreateData(farm.owner)
+
+        const newFarm = new Farm()
+        newFarm.name = farm.name
+        newFarm.owner = farm.owner
+    
+        return await FarmRepository.save(newFarm)
+    },
+
+    async findByFarmerOrFail(farmerId: string) {
+        const farm = await FarmRepository.findByFarmerId(farmerId)
+    
+        if (!farm) {
+            throw new ResourceNotFoundException('Farm was not found')
+        }
+    
+        return farm
     }
-
-    return farm
 }
 
-export default {
-    createFarm,
-    findByFarmerOrFail
-}
+export default FarmerService

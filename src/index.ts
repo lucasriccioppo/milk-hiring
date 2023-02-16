@@ -4,8 +4,7 @@ import app from './server'
 import database from './database'
 
 database.connect()
-    .then(() => {
-        const PORT = process.env.PORT || 3333
 
-        app.listen(PORT, () => console.log(`Server running on port ${PORT}!`))
-    })
+const PORT = process.env.PORT || 3333
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}!`))
