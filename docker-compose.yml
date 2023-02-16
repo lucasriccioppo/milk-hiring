@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  milk-hiring-db:
+    container_name: milk-hiring-db
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: milk-hiring-db
+      MONGO_INITDB_ROOT_USERNAME: milk-hiring
+      MONGO_INITDB_ROOT_PASSWORD: milk-hiring
+
+  milk-hiring-db-test:
+    container_name: milk-hiring-db-test
+    image: mongo
+    ports:
+      - "27018:27018"
+    environment:
+      MONGO_INITDB_DATABASE: milk-hiring-db-test
+      MONGO_INITDB_ROOT_USERNAME: milk-hiring-test
+      MONGO_INITDB_ROOT_PASSWORD: milk-hiring-test
