@@ -26,8 +26,10 @@ import FarmService from '../services/farmService'
  *     responses:
  *       '201':
  *         description: A successful response
- *       '400':
- *         description: Bad request
+ *       '404':
+ *         description: Not found
+ *       '422':
+ *         description: Unprocessable Entity
  */
 const registerProduction = async (req: Request, res: Response, next: NextFunction) => {
     const { quantity } = req.body
@@ -61,6 +63,8 @@ const registerProduction = async (req: Request, res: Response, next: NextFunctio
  *     responses:
  *       '200':
  *         description: A successful response
+ *       '404':
+ *         description: Not found
  */
 const getProductionSummary = async (req: Request, res: Response, next: NextFunction) => {
     const { month } = req.params
@@ -101,6 +105,8 @@ const getProductionSummary = async (req: Request, res: Response, next: NextFunct
  *     responses:
  *       '200':
  *         description: A successful response
+ *       '404':
+ *         description: Not found
  */
 const getProductionSummaryByFarm = async (req: Request, res: Response, next: NextFunction) => {
     const { farm, month } = req.params
@@ -139,6 +145,8 @@ const getProductionSummaryByFarm = async (req: Request, res: Response, next: Nex
  *     responses:
  *       '200':
  *         description: A successful response
+ *       '404':
+ *         description: Not found
  */
 const getPaidValueByFarmAndMonth = async (req: Request, res: Response, next: NextFunction) => {
     const { farm, month } = req.params
@@ -178,6 +186,8 @@ const getPaidValueByFarmAndMonth = async (req: Request, res: Response, next: Nex
  *     responses:
  *       '200':
  *         description: A successful response
+ *       '404':
+ *         description: Not found
  */
 const getPaidValueByFarmAndYear = async (req: Request, res: Response, next: NextFunction) => {
     const { farm, year } = req.params

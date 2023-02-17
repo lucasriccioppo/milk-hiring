@@ -8,7 +8,7 @@ import utils from '../utils/utils'
 import { IUserService } from './types/IUserService'
 
 const UserService: IUserService = {
-    async checkCreteData(email: string) {
+    async validateCreateData(email: string) {
         const userInDatabase = await UserRepository.findByEmail(email)
 
         if (userInDatabase) {
@@ -19,7 +19,7 @@ const UserService: IUserService = {
     },
 
     async createFarmer(user: IUser) {
-        await this.checkCreteData(user.email)
+        await this.validateCreateData(user.email)
 
         const newFarmer = new User()
         newFarmer.firstName = user.firstName

@@ -81,8 +81,6 @@ const createFarmer = async (req: Request, res: Response, next: NextFunction) => 
  *         description: A successful response
  *       '401':
  *         description: Unauthorized
- *       '400':
- *         description: Bad request
  */
 const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body

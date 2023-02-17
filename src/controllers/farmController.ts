@@ -29,8 +29,8 @@ import FarmService from '../services/farmService'
  *     responses:
  *       '201':
  *         description: A successful response
- *       '400':
- *         description: Bad Request
+ *       '422':
+ *         description: Unprocessable Entity
  */
 const createFarm = async (req: Request, res: Response, next: NextFunction) => {
     const { name, distance } = req.body

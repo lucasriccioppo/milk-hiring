@@ -11,7 +11,7 @@ import { IValuePaid } from './types/IValuePaid'
 import { IYearValuePaid } from './types/IYearValuePaid'
 
 const ProductionService: IProductionService = {
-    async checkRegisterData(farmId: string, date: Date) {
+    async validateRegisterData(farmId: string, date: Date) {
         const productionInDatabase = await ProductionRepository.findByFarmAndDate(farmId, date)
     
         if (productionInDatabase.length > 0) {
@@ -24,7 +24,7 @@ const ProductionService: IProductionService = {
     async registerProduction(production: IProduction) {
         const date = moment().startOf('day').toDate()
     
-        await this.checkRegisterData(production.farm, date)
+        await this.validateRegisterData(production.farm, date)
         
         const newProduction = new Production()
         newProduction.quantity = production.quantity

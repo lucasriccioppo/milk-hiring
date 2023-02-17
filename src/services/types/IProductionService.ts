@@ -5,7 +5,7 @@ import { IValuePaid } from './IValuePaid'
 import { IYearValuePaid } from './IYearValuePaid'
 
 export interface IProductionService {
-    checkRegisterData: (farmId: string, date: Date) => Promise<void>
+    validateRegisterData: (farmId: string, date: Date) => Promise<void>
     registerProduction: (production: IProduction) => Promise<Production>
     getProductionByFarmAndBetweenDates(farmId: string, from: Date, to: Date): Promise<Production[]>
     getProductionByFarmInMonth(farmId: string, month: number): Promise<Production[]>
