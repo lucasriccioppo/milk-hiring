@@ -4,6 +4,7 @@ import { IProduction } from '../models/types/IProduction'
 import { IProductionService } from './types/IProductionService'
 import moment from 'moment'
 import ValidationException from '../exceptions/ValidationErrorException'
+import FarmService from './farmService'
 
 const ProductionService: IProductionService = {
     async checkRegisterData(farmId: string, date: Date) {
@@ -31,7 +32,9 @@ const ProductionService: IProductionService = {
     },
 
     async getSummary(farmId: string, month: number) {
-        const fromDate = moment().set({ month, day: 1 }).toDate()
+        await FarmService.findByIdOrFail(farmId)
+
+        const fromDate = moment().set({ month: month - 1, day: 1 }).toDate()
         const toDate = moment(fromDate).add(1, 'month').toDate()
         const productionDocuments = await ProductionRepository.findByFarmAndBetweenDates(farmId, fromDate, toDate)
 

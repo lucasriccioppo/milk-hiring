@@ -34,7 +34,17 @@ const FarmService: IFarmService = {
         }
     
         return farm
-    }
+    },
+
+    async findByIdOrFail(userId: string) {
+        const farm = await FarmRepository.findById(userId)
+
+        if(!farm) {
+            throw new ResourceNotFoundException('Farm not found')
+        }
+
+        return Promise.resolve()
+    },
 }
 
 export default FarmService

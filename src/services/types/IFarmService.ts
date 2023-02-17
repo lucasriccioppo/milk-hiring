@@ -5,4 +5,5 @@ export interface IFarmService {
     checkCreateData(userId: string): Promise<void>
     createFarm: (farm: IFarm) => Promise<Farm>
     findByUserOrFail: (userId: string) => Promise<Farm>
+    findByIdOrFail(userId: string): Promise<void>
 }

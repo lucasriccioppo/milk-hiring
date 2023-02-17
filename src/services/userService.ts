@@ -6,6 +6,7 @@ import UnauthorizedException from '../exceptions/UnauthorizedException'
 import BadRequestException from '../exceptions/BadRequestException'
 import utils from '../utils/utils'
 import { IUserService } from './types/IUserService'
+import ResourceNotFoundException from '../exceptions/ResourceNotFoundException'
 
 const UserService: IUserService = {
     async checkCreteData(email: string) {
@@ -32,15 +33,20 @@ const UserService: IUserService = {
     },
 
     async login(email: string, password: string) {
-        const ecryptedPassword = cryptoJs.MD5(password).toString()
-    
-        const userInDatabase = await UserRepository.findByEmailAndPassword(email, ecryptedPassword)
+        const encryptedPassword = cryptoJs.MD5(password).toString()
+
+        const userInDatabase = await UserRepository.findByEmailAndPassword(email, encryptedPassword)
     
         if (!userInDatabase) {
             throw new UnauthorizedException('Access denied!')
         }
-    
-        return { token: utils.encryptJwt({ userId: userInDatabase.id }) }
+        
+        const dataToEcrypt = {
+            userId: userInDatabase.id,
+            role: userInDatabase.type
+        }
+
+        return { token: utils.encryptJwt(dataToEcrypt) }
     }
 }
 
