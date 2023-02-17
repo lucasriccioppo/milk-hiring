@@ -57,7 +57,7 @@ const registerProduction = async (req: Request, res: Response, next: NextFunctio
  *         required: true
  *         schema:
  *           type: number
- *           example: 50
+ *           example: 5
  *     responses:
  *       '200':
  *         description: A successful response
@@ -97,7 +97,7 @@ const getProductionSummary = async (req: Request, res: Response, next: NextFunct
  *         required: true
  *         schema:
  *           type: number
- *           example: 50
+ *           example: 8
  *     responses:
  *       '200':
  *         description: A successful response
@@ -135,7 +135,7 @@ const getProductionSummaryByFarm = async (req: Request, res: Response, next: Nex
  *         required: true
  *         schema:
  *           type: number
- *           example: 50
+ *           example: 10
  *     responses:
  *       '200':
  *         description: A successful response
@@ -152,9 +152,49 @@ const getPaidValueByFarmAndMonth = async (req: Request, res: Response, next: Nex
     }
 }
 
+/**
+ * @swagger
+ * /api/production/yearSummaryByFarm/:farm/:year:
+ *   get:
+ *     description: Get a summary of yearly milk production given an farm
+ *     tags: ['Production']
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: farm
+ *         description: Id of the farm desired
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 63ef970f791c1336cc40a915
+ *       - in: path
+ *         name: year
+ *         description: The desired year to get summary.
+ *         required: true
+ *         schema:
+ *           type: number
+ *           example: 2023
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+const getPaidValueByFarmAndYear = async (req: Request, res: Response, next: NextFunction) => {
+    const { farm, year } = req.params
+
+    try {
+        const farmInDatabase = await FarmService.findByIdOrFail(farm)
+        const registeredProduction = await ProductionService.getPaidValueByYear(farm, parseInt(year), farmInDatabase.distance)
+        return res.status(HttpStatus.OK).json(registeredProduction)
+    } catch(err) {
+        next(err)
+    }
+}
+
 export default {
     registerProduction,
     getProductionSummary,
     getProductionSummaryByFarm,
-    getPaidValueByFarmAndMonth
+    getPaidValueByFarmAndMonth,
+    getPaidValueByFarmAndYear
 }

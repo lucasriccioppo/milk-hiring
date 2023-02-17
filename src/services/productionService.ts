@@ -8,6 +8,7 @@ import FarmService from './farmService'
 import SemesterValues from '../constants/semesterValues'
 import utils from '../utils/utils'
 import { IValuePaid } from './types/IValuePaid'
+import { IYearValuePaid } from './types/IYearValuePaid'
 
 const ProductionService: IProductionService = {
     async checkRegisterData(farmId: string, date: Date) {
@@ -34,17 +35,21 @@ const ProductionService: IProductionService = {
         return await ProductionRepository.save(newProduction)
     },
 
-    async getProductionByFarmAndBetweenDates(farmId: string, month: number) {
+    async getProductionByFarmAndBetweenDates(farmId: string, from: Date, to: Date) {
         await FarmService.findByIdOrFail(farmId)
 
-        const fromDate = moment().set({ month: month - 1, day: 1 }).startOf('month').toDate()
+        return await ProductionRepository.findByFarmAndBetweenDates(farmId, from, to)
+    },
+
+    async getProductionByFarmInMonth(farmId: string, month: number) {
+        const fromDate = moment().set({ month: month - 1 }).startOf('month').toDate()
         const toDate = moment(fromDate).add(1, 'month').toDate()
 
-        return await ProductionRepository.findByFarmAndBetweenDates(farmId, fromDate, toDate)
+        return await this.getProductionByFarmAndBetweenDates(farmId, fromDate, toDate)
     },
 
     async getSummary(farmId: string, month: number) {
-        const productionDocuments = await this.getProductionByFarmAndBetweenDates(farmId, month)
+        const productionDocuments = await this.getProductionByFarmInMonth(farmId, month)
 
         let totalProduction = 0
         const productions = productionDocuments.map((production) => {
@@ -75,18 +80,27 @@ const ProductionService: IProductionService = {
     },
 
     async getPaidValueByMonth(farmId: string, month: number, distanceToFactory: number) {
-        const productionDocuments = await this.getProductionByFarmAndBetweenDates(farmId, month)
+        const productionDocuments = await this.getProductionByFarmInMonth(farmId, month)
 
         const initialValue = 0
         const totalQuantity = productionDocuments.reduce((accumulator, production) => accumulator + production.quantity, initialValue)
 
         const brlValue = await this.calculatePaidValue(totalQuantity, month, distanceToFactory)
         const usdValue = await utils.convertBrlToUsd(brlValue)
-
+        const monthName = moment().set({ month: month - 1 }).format('MMMM')
+ 
         return <IValuePaid> {
+            month: monthName,
             brl: `R$ ${brlValue.toFixed(2).replace('.', ',')}`,
             usd: `$ ${usdValue.toFixed(2).replace('.', ',')}`
         }
+    },
+
+    async getPaidValueByYear(farmId: string, year: number, distanceToFactory: number) {
+        const productions = await Promise.all([...SemesterValues.FIRST_SEMESTER, ...SemesterValues.SECOND_SEMESTER]
+            .map(async (month) => await this.getPaidValueByMonth(farmId, month, distanceToFactory)))
+
+        return Promise.resolve(<IYearValuePaid> { productions })
     }
 }
 
