@@ -21,12 +21,4 @@ export class User {
 
     @Column()
     type: UserTypes
-
-    constructor(user: IUser) {
-        this.firstName = user.firstName
-        this.lastName = user.lastName
-        this.email = user.email
-        this.password = user.password
-        this.type = user.type
-    }
 }

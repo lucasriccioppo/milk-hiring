@@ -19,7 +19,10 @@ const FarmService: IFarmService = {
     async createFarm(farm: IFarm) {
         await this.validateCreateData(farm.owner)
 
-        const newFarm = new Farm(farm)
+        const newFarm = new Farm()
+        newFarm.name = farm.name
+        newFarm.owner = farm.owner
+        newFarm.distance = farm.distance
     
         return await FarmRepository.save(newFarm)
     },
@@ -41,7 +44,7 @@ const FarmService: IFarmService = {
             throw new ResourceNotFoundException('Farm not found')
         }
 
-        return Promise.resolve()
+        return Promise.resolve(farm)
     },
 }
 

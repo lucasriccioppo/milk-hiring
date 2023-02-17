@@ -6,7 +6,6 @@ import UnauthorizedException from '../exceptions/UnauthorizedException'
 import BadRequestException from '../exceptions/BadRequestException'
 import utils from '../utils/utils'
 import { IUserService } from './types/IUserService'
-import ResourceNotFoundException from '../exceptions/ResourceNotFoundException'
 
 const UserService: IUserService = {
     async checkCreteData(email: string) {
@@ -22,10 +21,12 @@ const UserService: IUserService = {
     async createFarmer(user: IUser) {
         await this.checkCreteData(user.email)
 
-        const password = cryptoJs.MD5(user.password).toString()
-        user.password = password
-
-        const newFarmer = new User(user)
+        const newFarmer = new User()
+        newFarmer.firstName = user.firstName
+        newFarmer.lastName = user.lastName
+        newFarmer.email = user.email
+        newFarmer.password = cryptoJs.MD5(user.password).toString()
+        newFarmer.type = user.type
     
         return await UserRepository.save(newFarmer)
     },

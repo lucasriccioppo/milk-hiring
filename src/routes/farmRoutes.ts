@@ -6,6 +6,6 @@ import utils from '../utils/utils'
 
 const farmRouter = express.Router();
 
-farmRouter.post('/', utils.protect,/* validation(FarmValidation.createFarm), */(req, res, next) => FarmController.createFarm(req, res, next))
+farmRouter.post('/', utils.protect(),/* validation(FarmValidation.createFarm), */(req, res, next) => FarmController.createFarm(req, res, next))
 
 export default farmRouter

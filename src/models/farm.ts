@@ -16,10 +16,4 @@ export class Farm {
     
     @Column()
     distance: number // distance in kilometers to the factory
-
-    constructor(farm: IFarm) {
-        this.name = farm.name
-        this.owner = farm.owner
-        this.distance = farm.distance
-    }
 }

@@ -44,7 +44,7 @@ const registerProduction = async (req: Request, res: Response, next: NextFunctio
 
 /**
  * @swagger
- * /api/production/summary:
+ * /api/production/summary/:month:
  *   get:
  *     description: Get a summary of milk production
  *     tags: ['Production']
@@ -77,7 +77,7 @@ const getProductionSummary = async (req: Request, res: Response, next: NextFunct
 
 /**
  * @swagger
- * /api/production/summaryByFarm:
+ * /api/production/summaryByFarm/:farm/:month:
  *   get:
  *     description: Get a summary of milk production given an farm
  *     tags: ['Production']
@@ -113,8 +113,48 @@ const getProductionSummaryByFarm = async (req: Request, res: Response, next: Nex
     }
 }
 
+/**
+ * @swagger
+ * /api/production/monthSummaryByFarm/:farm/:month:
+ *   get:
+ *     description: Get a summary of monthly milk production given an farm
+ *     tags: ['Production']
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: farm
+ *         description: Id of the farm desired
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: 63ef970f791c1336cc40a915
+ *       - in: path
+ *         name: month
+ *         description: The desired month to get summary. January is 1 and December is 12
+ *         required: true
+ *         schema:
+ *           type: number
+ *           example: 50
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ */
+const getPaidValueByFarmAndMonth = async (req: Request, res: Response, next: NextFunction) => {
+    const { farm, month } = req.params
+
+    try {
+        const farmInDatabase = await FarmService.findByIdOrFail(farm)
+        const registeredProduction = await ProductionService.getPaidValueByMonth(farm, parseInt(month), farmInDatabase.distance)
+        return res.status(HttpStatus.OK).json(registeredProduction)
+    } catch(err) {
+        next(err)
+    }
+}
+
 export default {
     registerProduction,
     getProductionSummary,
-    getProductionSummaryByFarm
+    getProductionSummaryByFarm,
+    getPaidValueByFarmAndMonth
 }
