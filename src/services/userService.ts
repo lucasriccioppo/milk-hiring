@@ -22,12 +22,10 @@ const UserService: IUserService = {
     async createFarmer(user: IUser) {
         await this.checkCreteData(user.email)
 
-        const newFarmer = new User()
-        newFarmer.firstName = user.firstName
-        newFarmer.lastName = user.lastName
-        newFarmer.email = user.email
-        newFarmer.password = cryptoJs.MD5(user.password).toString()
-        newFarmer.type = user.type
+        const password = cryptoJs.MD5(user.password).toString()
+        user.password = password
+
+        const newFarmer = new User(user)
     
         return await UserRepository.save(newFarmer)
     },

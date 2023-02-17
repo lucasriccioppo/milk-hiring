@@ -6,7 +6,7 @@ import { IFarmService } from './types/IFarmService'
 import ValidationErrorException from '../exceptions/ValidationErrorException'
 
 const FarmService: IFarmService = {
-    async checkCreateData(userId: string) {
+    async validateCreateData(userId: string) {
         const farmInDatabase = await FarmRepository.findByUserId(userId)
 
         if(farmInDatabase) {
@@ -17,11 +17,9 @@ const FarmService: IFarmService = {
     },
 
     async createFarm(farm: IFarm) {
-        await this.checkCreateData(farm.owner)
+        await this.validateCreateData(farm.owner)
 
-        const newFarm = new Farm()
-        newFarm.name = farm.name
-        newFarm.owner = farm.owner
+        const newFarm = new Farm(farm)
     
         return await FarmRepository.save(newFarm)
     },

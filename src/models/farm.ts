@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ObjectID, ObjectIdColumn, OneToOne } from 'typeorm'
+import { IFarm } from './types/IFarm'
 import { User } from './user'
 
 @Entity()
@@ -12,4 +13,13 @@ export class Farm {
     @OneToOne(() => User)
     @JoinColumn()
     owner: string
+    
+    @Column()
+    distance: number // distance in kilometers to the factory
+
+    constructor(farm: IFarm) {
+        this.name = farm.name
+        this.owner = farm.owner
+        this.distance = farm.distance
+    }
 }

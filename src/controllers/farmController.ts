@@ -18,10 +18,14 @@ import FarmService from '../services/farmService'
  *           type: object
  *           required:
  *             - name
+ *             - distance
  *           properties:
  *             name:
  *               type: string
  *               example: Fazenda BovControl
+ *             distance:
+ *               type: number
+ *               example: 100
  *     responses:
  *       '201':
  *         description: A successful response
@@ -29,11 +33,11 @@ import FarmService from '../services/farmService'
  *         description: Bad Request
  */
 const createFarm = async (req: Request, res: Response, next: NextFunction) => {
-    const { name } = req.body
+    const { name, distance } = req.body
 
     try {
         const owner = req.context.userId
-        const createdFarm = await FarmService.createFarm({ name, owner })
+        const createdFarm = await FarmService.createFarm({ name, owner, distance })
         return res.status(HttpStatus.CREATED).json(createdFarm)
     } catch(err) {
         next(err)
