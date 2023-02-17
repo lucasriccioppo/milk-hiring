@@ -1,5 +1,5 @@
 type requestContext = {
-    farmerId: string
+    userId: string
 }
 
 declare namespace Express {

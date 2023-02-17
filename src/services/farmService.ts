@@ -5,9 +5,9 @@ import { IFarm } from '../models/types/IFarm'
 import { IFarmService } from './types/IFarmService'
 import ValidationErrorException from '../exceptions/ValidationErrorException'
 
-const FarmerService: IFarmService = {
-    async checkCreateData(farmerId: string) {
-        const farmInDatabase = await FarmRepository.findByFarmerId(farmerId)
+const FarmService: IFarmService = {
+    async checkCreateData(userId: string) {
+        const farmInDatabase = await FarmRepository.findByUserId(userId)
 
         if(farmInDatabase) {
             throw new ValidationErrorException('Farm for this farmer already exists')
@@ -26,8 +26,8 @@ const FarmerService: IFarmService = {
         return await FarmRepository.save(newFarm)
     },
 
-    async findByFarmerOrFail(farmerId: string) {
-        const farm = await FarmRepository.findByFarmerId(farmerId)
+    async findByUserOrFail(userId: string) {
+        const farm = await FarmRepository.findByUserId(userId)
     
         if (!farm) {
             throw new ResourceNotFoundException('Farm was not found')
@@ -37,4 +37,4 @@ const FarmerService: IFarmService = {
     }
 }
 
-export default FarmerService
+export default FarmService

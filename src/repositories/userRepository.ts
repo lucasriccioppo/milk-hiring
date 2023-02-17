@@ -1,12 +1,12 @@
-import { Farmer } from '../models/farmer'
+import { User } from '../models/user'
 import database from '../database'
 
 const dataSource = database.getDataSource()
-const repository = dataSource.getMongoRepository(Farmer)
+const repository = dataSource.getMongoRepository(User)
 
-const save = async (farmer: Farmer) => await repository.save(farmer)
+const save = async (user: User) => await repository.save(user)
 
-const findById = async (farmerId: string) => await repository.findOneBy({ id: farmerId })
+const findById = async (userId: string) => await repository.findOneBy({ id: userId })
 
 const findByEmail = async (email: string) => await repository.findOneBy({ email })
 

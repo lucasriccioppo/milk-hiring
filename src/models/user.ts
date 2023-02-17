@@ -1,7 +1,8 @@
 import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm'
+import { UserTypes } from '../constants/userTypes'
 
 @Entity()
-export class Farmer {
+export class User {
     @ObjectIdColumn()
     id: ObjectID
 
@@ -16,4 +17,7 @@ export class Farmer {
 
     @Column()
     password: string
+
+    @Column()
+    type: UserTypes
 }

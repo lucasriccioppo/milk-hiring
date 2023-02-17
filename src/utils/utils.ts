@@ -37,10 +37,10 @@ const getContext = (req: Request, res: Response, next: NextFunction) => {
         return next(err)
     }
 
-    const farmerId = get(decodedToken, 'farmerId' || '') || ''
+    const userId = get(decodedToken, 'userId' || '') || ''
 
     req.context = {
-        farmerId
+        userId
     }
 
     return next()

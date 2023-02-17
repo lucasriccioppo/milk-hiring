@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ObjectID, ObjectIdColumn, OneToOne } from 'typeorm'
-import { Farmer } from './farmer'
+import { User } from './user'
 
 @Entity()
 export class Farm {
@@ -9,7 +9,7 @@ export class Farm {
     @Column()
     name: string
 
-    @OneToOne(() => Farmer)
+    @OneToOne(() => User)
     @JoinColumn()
     owner: string
 }

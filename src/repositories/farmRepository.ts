@@ -6,9 +6,9 @@ const repository = dataSource.getMongoRepository(Farm)
 
 const save = async (farm: Farm) => await repository.save(farm)
 
-const findByFarmerId = async (farmerId: string) => await repository.findOneBy({ owner: farmerId })
+const findByUserId = async (userId: string) => await repository.findOneBy({ owner: userId })
 
 export default {
     save,
-    findByFarmerId
+    findByUserId
 }

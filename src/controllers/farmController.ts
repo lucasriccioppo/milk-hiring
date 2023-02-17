@@ -26,13 +26,13 @@ import FarmService from '../services/farmService'
  *       '201':
  *         description: A successful response
  *       '400':
- *         description: Farm already exists for this farmer
+ *         description: Bad Request
  */
 const createFarm = async (req: Request, res: Response, next: NextFunction) => {
     const { name } = req.body
 
     try {
-        const owner = req.context.farmerId
+        const owner = req.context.userId
         const createdFarm = await FarmService.createFarm({ name, owner })
         return res.status(HttpStatus.CREATED).json(createdFarm)
     } catch(err) {

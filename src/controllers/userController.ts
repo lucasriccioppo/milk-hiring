@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
 import HttpStatus from 'http-status-codes'
-import FarmerService from '../services/farmerService'
+import { UserTypes } from '../constants/userTypes'
+import UserService from '../services/userService'
 
 /**
  * @swagger
- * /api/farmer:
+ * /api/user:
  *   post:
  *     description: Create a new farmer / user
- *     tags: ['Farmer']
+ *     tags: ['User']
  *     consumes:
  *       - application/json
  *     parameters:
@@ -44,7 +45,7 @@ const createFarmer = async (req: Request, res: Response, next: NextFunction) => 
     const { first_name: firstName, last_name: lastName, email, password } = req.body
 
     try {
-        const createdFarmer = await FarmerService.createFarmer({ firstName, lastName, email, password })
+        const createdFarmer = await UserService.createFarmer({ firstName, lastName, email, password, type: UserTypes.FARMER })
         return res.status(HttpStatus.CREATED).json(createdFarmer)
     } catch(err) {
         next(err)
@@ -53,10 +54,10 @@ const createFarmer = async (req: Request, res: Response, next: NextFunction) => 
 
 /**
  * @swagger
- * /api/farmer/login:
+ * /api/user/login:
  *   post:
- *     description: Log in the farmer / user
- *     tags: ['Farmer']
+ *     description: Log in the user
+ *     tags: ['User']
  *     consumes:
  *       - application/json
  *     parameters:
@@ -81,13 +82,13 @@ const createFarmer = async (req: Request, res: Response, next: NextFunction) => 
  *       '401':
  *         description: Unauthorized
  *       '400':
- *         description: Farmer with this email already exists
+ *         description: Bad request
  */
 const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body
 
     try {
-        const token = await FarmerService.login(email, password)
+        const token = await UserService.login(email, password)
         return res.status(HttpStatus.OK).json(token)
     } catch(err) {
         next(err)
