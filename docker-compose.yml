@@ -11,6 +11,15 @@ services:
       MONGO_INITDB_DATABASE: milk-hiring-db
       MONGO_INITDB_ROOT_USERNAME: milk-hiring
       MONGO_INITDB_ROOT_PASSWORD: milk-hiring
+  
+  milk-hiring-redis:
+    container_name: milk-hiring-redis
+    image: redis
+    volumes:
+      -  ./data:/data
+    ports:
+      - 6379:6379
+
 
   milk-hiring-db-test:
     container_name: milk-hiring-db-test

@@ -5,7 +5,7 @@ import UnauthorizedException from '../exceptions/UnauthorizedException'
 import BadRequestException from '../exceptions/BadRequestException'
 import { UserTypes } from '../constants/userTypes'
 import { IToken } from './types/IToken'
-import FreeCurrencyApi from '../integrations/freeCurrencyApi'
+import CurrencyServices from '../services/currencyService'
 
 const { JWT_SECRET, JWT_EXPIRATION_TIME } = process.env
 
@@ -84,7 +84,7 @@ const protect = (role?: UserTypes) => {
 }
 
 const convertBrlToUsd = async (brlValue: number) => {
-    const currencies = await FreeCurrencyApi.getCurrencies()
+    const currencies = await CurrencyServices.getCurrencies()
     const brlToUsdRate = get(currencies, 'BRL', 1)
 
     return brlValue / brlToUsdRate

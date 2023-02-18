@@ -1,4 +1,7 @@
 import { DataSource } from 'typeorm'
+import { Farm } from '../models/farm'
+import { User } from '../models/user'
+import { Production } from '../models/production'
 
 const {
     DB_HOST,
@@ -18,7 +21,8 @@ const dataSource = new DataSource({
     username: DB_USERNAME,
     password: DB_PASSWORD,
     database: DB_NAME,
-    entities: [__dirname + "/models/*.ts"],
+    // entities: [__dirname + "/models/*.ts"],
+    entities: [Farm, Production, User],
     useUnifiedTopology: true,
     authSource: 'admin',
     synchronize: false,

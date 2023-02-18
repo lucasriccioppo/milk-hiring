@@ -1,18 +1,23 @@
 import { Farm } from '../models/farm'
-import database from '../database'
+import database from '../configs/database'
 import { ObjectID } from 'mongodb'
+import { IFarmRepository } from './types/IFarmRepository'
 
 const dataSource = database.getDataSource()
 const repository = dataSource.getMongoRepository(Farm)
 
-const save = async (farm: Farm) => await repository.save(farm)
+const FarmRepository: IFarmRepository = {
+    async save(farm: Farm) {
+        return await repository.save(farm)
+    },
 
-const findByUserId = async (userId: string) => await repository.findOneBy({ owner: userId })
+    async findByUserId(userId: string) {
+        return await repository.findOneBy({ owner: userId })
+    },
 
-const findById = async (farmId: string) => await repository.findOneBy({ _id: new ObjectID(farmId) })
-
-export default {
-    save,
-    findByUserId,
-    findById
+    async findById(farmId: string){
+        return await repository.findOneBy({ _id: new ObjectID(farmId) })
+    }
 }
+
+export default FarmRepository

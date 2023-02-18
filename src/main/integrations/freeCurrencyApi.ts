@@ -1,5 +1,6 @@
 import axios from 'axios'
-import {IFreeCurrencyApi} from './types/IFreeCurrencyApi'
+import FailedDependencyException from '../exceptions/FailedDependencyException'
+import { IFreeCurrencyApi } from './types/IFreeCurrencyApi'
 
 const {
     CURRENCY_API_KEY,
@@ -8,9 +9,13 @@ const {
 
 const FreeCurrencyApi: IFreeCurrencyApi = {
     async getCurrencies() {
-        const response = await axios.get(`${CURRENCY_API_URL}/latest?apikey=${CURRENCY_API_KEY}`)
+        try {
+            const response = await axios.get(`${CURRENCY_API_URL}/latest?apikey=${CURRENCY_API_KEY}`)
+            return Promise.resolve(response.data.data)
 
-        return Promise.resolve(response.data.data)
+        }catch(err) {
+            throw new FailedDependencyException('Error fetching currencies')
+        }
     }
 }
 

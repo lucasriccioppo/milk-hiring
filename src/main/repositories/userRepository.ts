@@ -1,20 +1,26 @@
 import { User } from '../models/user'
-import database from '../database'
+import database from '../configs/database'
+import { IUserRepository } from './types/IUserRepository'
 
 const dataSource = database.getDataSource()
 const repository = dataSource.getMongoRepository(User)
 
-const save = async (user: User) => await repository.save(user)
+const UserRepository: IUserRepository = {
+    async save(user:User) {
+        return await repository.save(user)
+    },
 
-const findById = async (userId: string) => await repository.findOneBy({ id: userId })
+    async findById(userId: string) {
+        return await repository.findOneBy({ id: userId })
+    },
 
-const findByEmail = async (email: string) => await repository.findOneBy({ email })
+    async findByEmail(email: string) {
+        return await repository.findOneBy({ email })
+    },
 
-const findByEmailAndPassword = async (email: string, password: string) => await repository.findOneBy({ email, password })
-
-export default {
-    save,
-    findById,
-    findByEmail,
-    findByEmailAndPassword
+    async findByEmailAndPassword(email: string, password: string) {
+        return await repository.findOneBy({ email, password })
+    }
 }
+
+export default UserRepository

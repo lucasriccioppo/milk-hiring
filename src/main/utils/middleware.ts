@@ -6,7 +6,7 @@ import morgan from 'morgan'
 import errorHandler from './errorHandler'
 import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import swaggerOptions from '../swaggerOptions'
+import swaggerOptions from '../configs/swaggerOptions'
 import utils from './utils'
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
