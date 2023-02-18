@@ -7,6 +7,7 @@ import ValidationException from '../exceptions/ValidationErrorException'
 import FarmService from './farmService'
 import SemesterValues from '../constants/semesterValues'
 import utils from '../utils/utils'
+import CurrencyUtils from '../utils/currencyUtils'
 import { IValuePaid } from './types/IValuePaid'
 import { IYearValuePaid } from './types/IYearValuePaid'
 
@@ -86,7 +87,7 @@ const ProductionService: IProductionService = {
         const totalQuantity = productionDocuments.reduce((accumulator, production) => accumulator + production.quantity, initialValue)
 
         const brlValue = await this.calculatePaidValue(totalQuantity, month, distanceToFactory)
-        const usdValue = await utils.convertBrlToUsd(brlValue)
+        const usdValue = await CurrencyUtils.convertBrlToUsd(brlValue)
         const monthName = moment().set({ month: month - 1 }).format('MMMM')
  
         return <IValuePaid> {

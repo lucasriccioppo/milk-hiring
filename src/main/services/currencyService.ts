@@ -1,21 +1,19 @@
 import FreeCurrencyApi from '../integrations/freeCurrencyApi'
-import redis from '../configs/redis'
-
-const redisClient = redis.getClient()
+import redisUtils from '../utils/redisUtils'
 
 const CurrencyService = {
     async getCurrencies() {
-        // console.log('entrou aqui')
-        // let currencies = await JSON.parse(redisClient.get('currencies').toString())
+        const currenciesInRedis = await redisUtils.getKey('currencies')
 
-        // if(!currencies) {
-        //     console.log('nao econtrado')
-        //     currencies = await FreeCurrencyApi.getCurrencies()
+        if(!currenciesInRedis) {
+            const currenciesInApi = await FreeCurrencyApi.getCurrencies()
 
-        //     await redisClient.set('currencies', currencies, 'EX', 60 * 60)
-        // }
+            await redisUtils.setKey('currencies', JSON.stringify(currenciesInApi))
 
-        return FreeCurrencyApi.getCurrencies()
+            return currenciesInApi
+        }
+
+        return JSON.parse(currenciesInRedis)
     }
 }
 

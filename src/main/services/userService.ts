@@ -4,7 +4,7 @@ import { IUser } from '../models/types/IUser'
 import cryptoJs from 'crypto-js'
 import UnauthorizedException from '../exceptions/UnauthorizedException'
 import BadRequestException from '../exceptions/BadRequestException'
-import utils from '../utils/utils'
+import JwtUtils from '../utils/jwtUtils'
 import { IUserService } from './types/IUserService'
 
 const UserService: IUserService = {
@@ -45,7 +45,7 @@ const UserService: IUserService = {
             role: userInDatabase.type
         }
 
-        return { token: utils.encryptJwt(dataToEcrypt) }
+        return { token: JwtUtils.encryptJwt(dataToEcrypt) }
     }
 }
 

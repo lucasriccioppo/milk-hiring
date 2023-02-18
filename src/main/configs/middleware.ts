@@ -6,8 +6,8 @@ import morgan from 'morgan'
 import errorHandler from './errorHandler'
 import swaggerJsDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import swaggerOptions from '../configs/swaggerOptions'
-import utils from './utils'
+import swaggerOptions from './swaggerOptions'
+import middlewareUtils from '../utils/middlewareUtils'
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
 
@@ -18,7 +18,7 @@ const addMiddlewares = (app: express.Application) => {
     app.use(compression())
     app.use(morgan('combined'))
 
-    app.use(utils.getContext)
+    app.use(middlewareUtils.getContext)
 
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
     app.use('/api', router)

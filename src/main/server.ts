@@ -1,5 +1,5 @@
 import express from 'express'
-import addMiddlewares from './utils/middleware'
+import addMiddlewares from './configs/middleware'
 
 const app = express()
 
