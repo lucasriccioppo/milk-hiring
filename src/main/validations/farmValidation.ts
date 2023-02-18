@@ -1,7 +1,8 @@
-import { object, string } from 'yup'
+import * as Yup from 'yup'
 
-const createFarm = object().shape({
-    name: string().min(2).max(80).required()
+const createFarm = Yup.object().shape({
+    name: Yup.string().min(2).max(80).required(),
+    distance: Yup.number().required()
 })
 
 export default {

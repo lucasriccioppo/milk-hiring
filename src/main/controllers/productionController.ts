@@ -48,7 +48,7 @@ const registerProduction = async (req: Request, res: Response, next: NextFunctio
  * @swagger
  * /api/production/summary/:month:
  *   get:
- *     description: Get a summary of milk production
+ *     description: Get a summary of milk production for the farm of the user logged in
  *     tags: ['Production']
  *     consumes:
  *       - application/json
