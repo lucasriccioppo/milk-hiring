@@ -1,5 +1,4 @@
 import { Column, Entity, JoinColumn, ObjectID, ObjectIdColumn, OneToOne } from 'typeorm'
-import { IFarm } from './types/IFarm'
 import { User } from './user'
 
 @Entity()

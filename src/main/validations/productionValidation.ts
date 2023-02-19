@@ -1,25 +1,25 @@
 import * as Yup from 'yup'
 import SemestersConstants from '../constants/semesterValues'
 
-const registerProduction = Yup.object().shape({
+const registerProduction = Yup.object({
     quantity: Yup.number().required()
 })
 
-const getProductionSummary = Yup.object().shape({
+const getProductionSummary = Yup.object({
     month: Yup.number().oneOf([...SemestersConstants.FIRST_SEMESTER, ...SemestersConstants.SECOND_SEMESTER]).required()
 })
 
-const getProductionSummaryByFarm = Yup.object().shape({
+const getProductionSummaryByFarm = Yup.object({
     farm: Yup.string().min(20).max(30).required(),
     month: Yup.number().oneOf([...SemestersConstants.FIRST_SEMESTER, ...SemestersConstants.SECOND_SEMESTER]).required()
 })
 
-const getPaidValueByFarmAndMonth = Yup.object().shape({
+const getPaidValueByFarmAndMonth = Yup.object({
     farm: Yup.string().min(20).max(30).required(),
     month: Yup.number().oneOf([...SemestersConstants.FIRST_SEMESTER, ...SemestersConstants.SECOND_SEMESTER]).required()
 })
 
-const getPaidValueByFarmAndYear = Yup.object().shape({
+const getPaidValueByFarmAndYear = Yup.object({
     farm: Yup.string().min(20).max(30).required(),
     year: Yup.number().required()
 })

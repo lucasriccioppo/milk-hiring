@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm'
+import { DataSource, EntityTarget, ObjectLiteral } from 'typeorm'
 import { Farm } from '../models/farm'
 import { User } from '../models/user'
 import { Production } from '../models/production'
@@ -31,9 +31,16 @@ const dataSource = new DataSource({
 
 const getDataSource = () => dataSource
 
-const connect = () => dataSource.initialize()
+const connect = async () => await dataSource.initialize()
+
+const close = async () => await dataSource.destroy()
+
+const insert = async (collection: EntityTarget<ObjectLiteral>, document: object) =>
+    await dataSource.getRepository(collection).insert(document)
 
 export default {
     getDataSource,
-    connect
+    connect,
+    close,
+    insert
 }

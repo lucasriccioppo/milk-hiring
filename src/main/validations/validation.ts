@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 import { ObjectSchema, ValidationError } from 'yup'
-import { ObjectShape } from 'yup/lib/object'
 import ValidationErrorException from '../exceptions/ValidationErrorException'
 
-const validation = <T extends ObjectShape> (schema: ObjectSchema<T>) => async (req: Request, res: Response, next: NextFunction) => {
+const validation = <T extends Object> (schema: ObjectSchema<T>) => async (req: Request, res: Response, next: NextFunction) => {
     const params = {...req.params, ...req.body, ...req.query}
 
     try {

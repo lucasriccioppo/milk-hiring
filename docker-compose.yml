@@ -24,6 +24,9 @@ services:
   milk-hiring-db-test:
     container_name: milk-hiring-db-test
     image: mongo
+    command: mongod --port 27018
+    expose:
+      - "27018"
     ports:
       - "27018:27018"
     environment:
