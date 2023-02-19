@@ -35,9 +35,10 @@ const UserService: IUserService = {
         const encryptedPassword = cryptoJs.MD5(password).toString()
 
         const userInDatabase = await UserRepository.findByEmailAndPassword(email, encryptedPassword)
-    
+
         if (!userInDatabase) {
-            throw new UnauthorizedException('Access denied!')
+            console.log('aqui mesmo')
+            throw new UnauthorizedException('Access denied')
         }
         
         const dataToEcrypt = {

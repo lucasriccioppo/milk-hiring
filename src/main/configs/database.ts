@@ -12,7 +12,7 @@ const {
 } = process.env
 
 const envDbPortValue = parseInt(DB_PORT || '')
-const PORT : number = Number.isInteger(envDbPortValue) ? envDbPortValue : 5432
+const PORT : number = Number.isInteger(envDbPortValue) ? envDbPortValue : 27017
 
 const dataSource = new DataSource({
     type: 'mongodb',
@@ -21,7 +21,6 @@ const dataSource = new DataSource({
     username: DB_USERNAME,
     password: DB_PASSWORD,
     database: DB_NAME,
-    // entities: [__dirname + "/models/*.ts"],
     entities: [Farm, Production, User],
     useUnifiedTopology: true,
     authSource: 'admin',
@@ -35,12 +34,16 @@ const connect = async () => await dataSource.initialize()
 
 const close = async () => await dataSource.destroy()
 
-const insert = async (collection: EntityTarget<ObjectLiteral>, document: object) =>
-    await dataSource.getRepository(collection).insert(document)
+const insert = async (collection: EntityTarget<ObjectLiteral>, document: object) => 
+    await dataSource.getMongoRepository(collection).insertOne(document)
+
+const deleteAll = async (collection: EntityTarget<ObjectLiteral>) =>
+    await dataSource.getMongoRepository(collection).deleteMany({})
 
 export default {
     getDataSource,
     connect,
     close,
-    insert
+    insert,
+    deleteAll
 }

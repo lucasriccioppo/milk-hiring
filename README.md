@@ -30,13 +30,17 @@ ou
 
 #### Testes
 
-O projeto conta com uma cobertura de testes unitários para todos os endpoints disponíveis, utlizando um banco de dados somente para isso (o banco sobe juntamente com o banco da aplicação no docker-compose). Para rodar a bateria de testes, utilizar o comando:
+O projeto conta com uma cobertura de testes end to end para todos os endpoints disponíveis, utlizando um banco de dados somente para isso (o banco milk-hiring-db-test sobe juntamente com o banco da aplicação no docker-compose). Para rodar a bateria de testes, utilizar o comando:
 
 `npm test`
 
 ou
 
 `yarn test`
+
+Para rodar somente um teste, basta passar o nome do arquivo junto com o comando. Os testes disponíveis são farm.test.ts, production.test.ts e user.test.ts. Exemplo:
+
+`yarn test farm.test.ts`
 
 #### Documentação
 
