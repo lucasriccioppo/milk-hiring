@@ -10,22 +10,20 @@ import FarmService from '../services/farmService'
  *     tags: ['Farm']
  *     consumes:
  *       - application/json
- *     parameters:
- *       - in: body
- *         name: name
- *         description: Name of the farm
- *         schema:
- *           type: object
- *           required:
- *             - name
- *             - distance
- *           properties:
- *             name:
- *               type: string
- *               example: Fazenda BovControl
- *             distance:
- *               type: number
- *               example: 100
+ *     requestBody:
+ *       description: Login object
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Fazenda BovControl
+ *               distance:
+ *                 type: number
+ *                 example: 100
  *     responses:
  *       '201':
  *         description: A successful response

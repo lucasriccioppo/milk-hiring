@@ -11,18 +11,17 @@ import FarmService from '../services/farmService'
  *     tags: ['Production']
  *     consumes:
  *       - application/json
- *     parameters:
- *       - in: body
- *         name: production
- *         description: Daily milk production of the farm in liters 
- *         schema:
- *           type: object
- *           required:
- *             - quantity
- *           properties:
- *             quantity:
- *               type: number
- *               example: 50
+ *     requestBody:
+ *       description: Login object
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               quantity:
+ *                 type: number
+ *                 example: 50
  *     responses:
  *       '201':
  *         description: A successful response
@@ -46,7 +45,7 @@ const registerProduction = async (req: Request, res: Response, next: NextFunctio
 
 /**
  * @swagger
- * /api/production/summary/:month:
+ * /api/production/summary/{month}:
  *   get:
  *     description: Get a summary of milk production for the farm of the user logged in
  *     tags: ['Production']
@@ -81,7 +80,7 @@ const getProductionSummary = async (req: Request, res: Response, next: NextFunct
 
 /**
  * @swagger
- * /api/production/summaryByFarm/:farm/:month:
+ * /api/production/summaryByFarm/{farm}/{month}:
  *   get:
  *     description: Get a summary of milk production given an farm
  *     tags: ['Production']
@@ -121,7 +120,7 @@ const getProductionSummaryByFarm = async (req: Request, res: Response, next: Nex
 
 /**
  * @swagger
- * /api/production/monthSummaryByFarm/:farm/:month:
+ * /api/production/monthSummaryByFarm/{farm}/{month}:
  *   get:
  *     description: Get a summary of monthly milk production given an farm
  *     tags: ['Production']
@@ -162,7 +161,7 @@ const getPaidValueByFarmAndMonth = async (req: Request, res: Response, next: Nex
 
 /**
  * @swagger
- * /api/production/yearSummaryByFarm/:farm/:year:
+ * /api/production/yearSummaryByFarm/{farm}/{year}:
  *   get:
  *     description: Get a summary of yearly milk production given an farm
  *     tags: ['Production']

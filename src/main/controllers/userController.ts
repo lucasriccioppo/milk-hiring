@@ -11,30 +11,26 @@ import UserService from '../services/userService'
  *     tags: ['User']
  *     consumes:
  *       - application/json
- *     parameters:
- *       - in: body
- *         name: farmer
- *         description: Farmer object
- *         schema:
- *           type: object
- *           required:
- *             - first_name
- *             - last_name
- *             - email
- *             - password
- *           properties:
- *             first_name:
- *               type: string
- *               example: Lucas
- *             last_name:
- *               type: string
- *               example: Silva
- *             email:
- *               type: string
- *               example: lucassilva@gmail.com
- *             password:
- *               type: string
- *               example: senha123456
+ *     requestBody:
+ *       description: Login object
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               first_name:
+ *                 type: string
+ *                 example: Lucas
+ *               last_name:
+ *                 type: string
+ *                 example: Silva
+ *               email:
+ *                 type: string
+ *                 example: lucassilva@gmail.com
+ *               password:
+ *                 type: string
+ *                 example: senha123456
  *     responses:
  *       '201':
  *         description: A successful response
@@ -60,22 +56,20 @@ const createFarmer = async (req: Request, res: Response, next: NextFunction) => 
  *     tags: ['User']
  *     consumes:
  *       - application/json
- *     parameters:
- *       - in: body
- *         name: data
- *         description: Login object
- *         schema:
- *           type: object
- *           required:
- *             - email
- *             - password
- *           properties:
- *             email:
- *               type: string
- *               example: lucassilva@gmail.com
- *             password:
- *               type: string
- *               example: senha123456
+ *     requestBody:
+ *       description: Login object
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: lucassilva@gmail.com
+ *               password:
+ *                 type: string
+ *                 example: senha123456
  *     responses:
  *       '201':
  *         description: A successful response
