@@ -12,11 +12,11 @@ ou
 
 `yarn install`
 
-Para fins de desenvolvimento foi criado o arquivo .env.sample, para que não fosse necessário subir o arquivo .env (questões de segurança). O .env.sample tem armazenado as variáveis de ambiente de localhost. Criar um arquivo .env através do comando:
+Para fins de desenvolvimento foi criado o arquivo .env.sample, para que não fosse necessário subir o arquivo .env (questões de segurança). O .env.sample tem armazenado as variáveis de ambiente para ambiente local. Criar um arquivo .env através do comando:
 
 `cp .env.sample .env`
 
-Depois inicializar o banco de dados através do comando:
+Depois inicializar o banco de dados e o redis através do comando:
 
 `docker-compose up`
 
