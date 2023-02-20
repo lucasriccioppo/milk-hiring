@@ -4,7 +4,7 @@ import { User } from './user'
 @Entity()
 export class Farm {
     @ObjectIdColumn()
-    id: ObjectID
+    _id: ObjectID
 
     @Column()
     name: string

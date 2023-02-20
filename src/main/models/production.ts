@@ -4,7 +4,7 @@ import { Farm } from './farm'
 @Entity()
 export class Production {
     @ObjectIdColumn()
-    id: ObjectID
+    _id: ObjectID
 
     @Column()
     quantity: number

@@ -6,8 +6,7 @@ import database from '../main/configs/database'
 import { User } from '../main/models/user'
 import { Farm } from '../main/models/farm'
 import HttpStatus from 'http-status-codes'
-import userData from './data/user'
-import UserService from "../main/services/userService"
+import testUtils from "./utils/testUtils"
 
 const BASE_URL = '/api/farm'
 
@@ -17,11 +16,11 @@ let userId: string
 describe('Farm tests', () => {
     beforeAll(async () => {
         await database.connect()
-        const userInserted = await database.insert(User, userData)
-        userId = userInserted.insertedId.toString()
 
-        const authorization = await UserService.login('test@test.com', 'teste123')
-        farmerToken = authorization.token
+        const farmerUser: User = await testUtils.createDefaultFarmerUser()
+        userId = farmerUser._id.toString()
+
+        farmerToken = await testUtils.getToken(farmerUser)
     })
 
     afterAll(async () => {

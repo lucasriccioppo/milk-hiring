@@ -65,7 +65,6 @@ describe('User tests', () => {
             })
 
         expect(res.statusCode).toEqual(HttpStatus.UNAUTHORIZED)
-        expect(res.body.description).toEqual('Email already exists on database')
-        expect(res.body).toHaveProperty('token')
+        expect(res.body.description).toEqual('Access denied')
     })
 })

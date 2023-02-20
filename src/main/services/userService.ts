@@ -37,12 +37,11 @@ const UserService: IUserService = {
         const userInDatabase = await UserRepository.findByEmailAndPassword(email, encryptedPassword)
 
         if (!userInDatabase) {
-            console.log('aqui mesmo')
             throw new UnauthorizedException('Access denied')
         }
         
         const dataToEcrypt = {
-            userId: userInDatabase.id,
+            userId: userInDatabase._id,
             role: userInDatabase.type
         }
 

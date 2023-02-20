@@ -37,7 +37,7 @@ const registerProduction = async (req: Request, res: Response, next: NextFunctio
     try {
         const userId = req.context.userId
         const farm = await FarmService.findByUserOrFail(userId)
-        const registeredProduction = await ProductionService.registerProduction({ quantity, farm: farm.id.toString() })
+        const registeredProduction = await ProductionService.registerProduction({ quantity, farm: farm._id.toString() })
         return res.status(HttpStatus.CREATED).json(registeredProduction)
     } catch(err) {
         next(err)
@@ -72,7 +72,7 @@ const getProductionSummary = async (req: Request, res: Response, next: NextFunct
     try {
         const userId = req.context.userId
         const farm = await FarmService.findByUserOrFail(userId)
-        const registeredProduction = await ProductionService.getSummary(farm.id.toString(), parseInt(month))
+        const registeredProduction = await ProductionService.getSummary(farm._id.toString(), parseInt(month))
         return res.status(HttpStatus.OK).json(registeredProduction)
     } catch(err) {
         next(err)

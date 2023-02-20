@@ -1,19 +1,21 @@
 import FreeCurrencyApi from '../integrations/freeCurrencyApi'
 import redisUtils from '../utils/redisUtils'
+import Utils from '../utils/utils'
 
 const CurrencyService = {
     async getCurrencies() {
-        const currenciesInRedis = await redisUtils.getKey('currencies')
+        const isTest = Utils.isTestEnvironment()
+        let currenciesInRedis = isTest ? null : await redisUtils.getKey('currencies')
 
         if(!currenciesInRedis) {
             const currenciesInApi = await FreeCurrencyApi.getCurrencies()
 
-            await redisUtils.setKey('currencies', JSON.stringify(currenciesInApi))
+            isTest ? Promise.resolve() : await redisUtils.setKey('currencies', JSON.stringify(currenciesInApi))
 
             return currenciesInApi
         }
 
-        return JSON.parse(currenciesInRedis)
+        return JSON.parse(currenciesInRedis.toString())
     }
 }
 

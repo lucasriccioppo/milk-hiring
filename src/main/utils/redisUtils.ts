@@ -2,7 +2,7 @@ import redis from '../configs/redis'
 
 const redisClient = redis.getClient()
 
-const CurrencyService = {
+const RedisUtils = {
     async getKey(key: string) {
         const valueInRedis = await redisClient.get(key)
         return valueInRedis ? JSON.parse(valueInRedis) : null
@@ -13,4 +13,4 @@ const CurrencyService = {
     }
 }
 
-export default CurrencyService
+export default RedisUtils

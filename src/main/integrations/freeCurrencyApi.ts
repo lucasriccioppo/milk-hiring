@@ -14,6 +14,7 @@ const FreeCurrencyApi: IFreeCurrencyApi = {
             return Promise.resolve(response.data.data)
 
         }catch(err) {
+            console.log(err)
             throw new FailedDependencyException('Error fetching currencies')
         }
     }
