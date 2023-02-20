@@ -5,7 +5,8 @@
   "main": "src/main/index.ts",
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only --exit-child src/main/index.ts",
-    "start": "NODE_ENV=production tsc src/main/index.ts",
+    "build": "tsc -p .",
+    "start": "NODE_ENV=production node src/main/index.ts",
     "test": "NODE_ENV=test jest --runInBand"
   },
   "author": "Lucas Riccioppo",
