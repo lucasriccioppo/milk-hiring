@@ -49,11 +49,3 @@ Foi implementada um documentação do _Swagger_ na aplicação. Através de lá 
 `http://localhost:3333/api-docs`
 
 (caso a variável de ambiente PORT tenha sido alterada, é necessário alterar a porta 3333 na url acima para o valor setado no .env)
-
-#### Observação
-
-Foi feito também um deploy da aplicação no heroku, portanto é possível acessar a api através da url:
-` https://challenge-bravo-hurb.herokuapp.com/`
-
-Apesar de normalmente não ter documentação swagger para api's em produção, foi disponibilizado a mesma nesse endpoint, para facilitar:
-`https://challenge-bravo-hurb.herokuapp.com/api-docs/`
